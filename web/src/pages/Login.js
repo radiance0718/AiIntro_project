@@ -1,25 +1,39 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
-import { useNavigate } from 'react-router-dom'; // 引入 React Router 的 useNavigate 钩子
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [form] = Form.useForm();
-  const navigate = useNavigate(); // 创建 navigate 函数实例
+  const navigate = useNavigate();
 
-  // 预设的有效用户名和密码
-  const validUsername = 'admin';
-  const validPassword = '123';
+  const onFinish = async (values) => {
+    try {
+      const response = await fetch('http://10.26.137.106:9090/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Name: values.username,
+          Password: values.password,
+        }),
+      });
+      const data = await response.json();
+      console.log(data)
 
-  const onFinish = (values) => {
-    // 验证输入的用户名和密码
-    if (values.username === validUsername && values.password === validPassword) {
-      // 登录成功
-      console.log('Login successful');
-      navigate('/home'); // 跳转到 dashboard 页面
-    } else {
-      // 登录失败
-      console.log('Login failed');
-      alert('Invalid username or password'); // 显示错误信息
+      if (data=="true") {
+        // 登录成功
+        console.log('Login successful');
+        navigate('/home'); // 跳转到 home 页面
+      } else {
+        // 登录失败
+        console.log('Login failed');
+        alert('Invalid username or password');
+      }
+    } catch (error) {
+      // 网络或其他错误
+      console.error('Login error:', error);
+      alert('Login error');
     }
   };
 
