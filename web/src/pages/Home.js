@@ -1,50 +1,38 @@
-import React, { useState } from 'react';
-import { Select, Row, Col } from 'antd';
-
-const { Option } = Select;
+import React from 'react';
+import { Button, Row, Col } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const navigate = useNavigate();
 
-  // 分类及对应人数
-  const categoryCounts = {
-    '勤学者': 120,
-    '思考者': 80,
-    '博览者': 150
+  const handleNavigate = (path) => {
+    navigate(path);
   };
 
-  const handleCategoryChange = value => {
-    setSelectedCategory(value);
-  };
+  const buttonStyle = (bgColor) => ({
+    width: '100%',
+    height: '50vh',
+    fontSize: '18px',
+    backgroundColor: bgColor, // 背景颜色
+    border: 'none',           // 移除边框
+    color: 'black'            // 字体颜色
+  });
 
   return (
-    <div>
-      <Row gutter={16} style={{ padding: 20 }}>
-        <Col span={12}>
-          <div className="section">
-            <h2>选择分类</h2>
-            <Select
-              style={{ width: 200 }}
-              placeholder="请选择一个分类"
-              onChange={handleCategoryChange}
-              value={selectedCategory}
-            >
-              {Object.keys(categoryCounts).map(category => (
-                <Option key={category} value={category}>{category}</Option>
-              ))}
-            </Select>
-            {selectedCategory && (
-              <p>
-                {selectedCategory}类有{categoryCounts[selectedCategory]}人
-              </p>
-            )}
-          </div>
-        </Col>
-        <Col span={12}><div className="section">区域2</div></Col>
-        <Col span={12}><div className="section">区域3</div></Col>
-        <Col span={12}><div className="section">区域4</div></Col>
-      </Row>
-    </div>
+    <Row style={{ height: '100vh' }}>
+      <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Button style={buttonStyle('#fadb5f')} onClick={() => handleNavigate('/Fun1')}>功能 1</Button> {/* 淡黄色 */}
+      </Col>
+      <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Button style={buttonStyle('#95de64')} onClick={() => handleNavigate('/Fun2')}>功能 2</Button> {/* 淡绿色 */}
+      </Col>
+      <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Button style={buttonStyle('#69c0ff')} onClick={() => handleNavigate('/Fun3')}>功能 3</Button> {/* 淡蓝色 */}
+      </Col>
+      <Col span={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Button style={buttonStyle('#ff85c0')} onClick={() => handleNavigate('/Fun4')}>功能 4</Button> {/* 淡粉色 */}
+      </Col>
+    </Row>
   );
 }
 
