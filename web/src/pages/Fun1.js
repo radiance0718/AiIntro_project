@@ -8,7 +8,7 @@ function Fun1() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [queryResult, setQueryResult] = useState('');
 
-  const categories = ['分类1', '分类2', '分类3']; // 示例分类
+  const categories = ['1', '2', '3','4','5','6']; // 示例分类
 
   const handleCategoryChange = value => {
     setSelectedCategory(value);
@@ -16,9 +16,15 @@ function Fun1() {
 
   const handleQuery = async () => {
     try {
-      // 替换为您的后端API地址和查询参数
-      const response = await axios.get(`https://your-api.com/query?category=${selectedCategory}`);
-      setQueryResult(response.data); // 假设返回的数据在 response.data 中
+        const response = await axios.post('http://10.26.137.106:9090/admin/countType', {
+            Type: selectedCategory
+          });
+          
+
+
+      setQueryResult(response.data);
+       // 假设返回的数据在 response.data 中
+       console.log(response.data)
     } catch (error) {
       console.error('查询失败:', error);
       // 处理错误情况
@@ -36,7 +42,7 @@ function Fun1() {
           </Select>
         </Col>
         <Col>
-          <Button type="primary" >查询</Button>
+          <Button type="primary" onClick={handleQuery}>查询</Button>
         </Col>
       </Row>
       <Row style={{ marginTop: '20px' }}>

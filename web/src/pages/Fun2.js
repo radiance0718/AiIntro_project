@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const { Option } = Select;
 
-function Fun2() {
+function Fun1() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [queryResult, setQueryResult] = useState('');
 
@@ -16,8 +16,12 @@ function Fun2() {
 
   const handleQuery = async () => {
     try {
-      // 替换为您的后端API地址和查询参数
-      const response = await axios.get(`http://10.26.137.106:9090/admin?Type=${selectedCategory}`);
+        const response = await axios.post('http://10.26.137.106:9090/admin/countGrade', {
+            Type: selectedCategory
+          });
+          
+
+
       setQueryResult(response.data);
        // 假设返回的数据在 response.data 中
        console.log(response.data)
@@ -50,4 +54,4 @@ function Fun2() {
   );
 }
 
-export default Fun2;
+export default Fun1;
