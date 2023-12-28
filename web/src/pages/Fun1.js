@@ -35,8 +35,15 @@ function Fun1() {
     }
   };
 
+  const centerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  };
+
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={centerStyle}>
       <Row gutter={16}>
         <Col>
           <Select value={selectedCategory} onChange={handleCategoryChange} style={{ width: 200 }}>
