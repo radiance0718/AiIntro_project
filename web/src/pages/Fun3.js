@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Button, Row, Col, Upload, message, Image } from 'antd';
+import { Input, Button, Row, Col, Upload, message } from 'antd';
 import axios from 'axios';
-import Papa from 'papaparse';
 
 function QueryStudent() {
   const [studentId, setStudentId] = useState('');
@@ -19,7 +18,6 @@ function QueryStudent() {
     try {
       const response = await axios.get(`https://your-api.com/students/${studentId}`);
       setQueryResult(response.data);
-      // 假设类别是响应数据的一部分
       const category = response.data.category;
       fetchCategoryImages(category);
     } catch (error) {
@@ -32,7 +30,6 @@ function QueryStudent() {
   const fetchCategoryImages = async (category) => {
     try {
       const response = await axios.get(`https://your-api.com/category-images/${category}`);
-      // 假设响应包含一个base64图片数组
       setCategoryImages(response.data.images);
     } catch (error) {
       console.error('图片获取失败:', error);
@@ -42,28 +39,19 @@ function QueryStudent() {
 
   // 处理文件变化
   const handleFileChange = ({ file }) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      Papa.parse(e.target.result, {
-        complete: (results) => {
-          setFileData(results.data);
-          message.success('文件读取成功');
-        },
-        header: true
-      });
-    };
-    reader.readAsText(file);
+    // 直接设置文件数据
+    setFileData(file);
   };
 
   // 上传文件
   const handleFileUpload = async () => {
     try {
       const formData = new FormData();
-      formData.append('file', fileData); 
+      formData.append('file', fileData); // 上传原始文件对象
 
-      const response = await axios.post('https://your-api.com/upload-csv', formData, {
+      const response = await axios.post('http://10.26.137.106:9090/admin/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', 
+          'Content-Type': 'multipart/form-data',
         },
       });
       message.success('文件上传成功');
@@ -86,9 +74,8 @@ function QueryStudent() {
           />
           <Button type="primary" onClick={handleQuery}>查询</Button>
           {queryResult && <div>查询结果: {JSON.stringify(queryResult)}</div>}
-          {/* 显示类别图片 */}
           {categoryImages.map((img, index) => (
-            <Image key={index} src={`data:image/png;base64,${img}`} />
+            <img key={index} src={`data:image/png;base64,${img}`} alt={`category-${index}`} />
           ))}
         </Col>
 
