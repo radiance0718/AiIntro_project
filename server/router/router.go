@@ -30,7 +30,6 @@ func InitRouter() *gin.Engine {
 		publicAdminRouter.POST("countGrade", services.CountByGrade)
 		publicAdminRouter.POST("countDate", services.CountDate)
 		publicAdminRouter.POST("showImage", services.ShowImage)
-		publicAdminRouter.POST("checkType", services.CheckType)
 		publicAdminRouter.POST("upload", services.UploadCSV)
 	}
 	return Router

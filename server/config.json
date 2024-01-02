@@ -64,5 +64,13 @@
       "研究生二年" : 56,
       "博士" : 45
     }
+  },
+  "StudentCategorise" : {
+    "0" : "Diligent",
+    "1" : "Explorer",
+    "2" : "Learner",
+    "3" : "Researcher",
+    "4" : "Thinker",
+    "5" : "Unknown"
   }
 }
