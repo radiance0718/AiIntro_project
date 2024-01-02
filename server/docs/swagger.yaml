@@ -1,0 +1,376 @@
+definitions:
+  services.LoginResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+      token:
+        type: string
+    type: object
+  services.Response:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:9090
+info:
+  contact: {}
+  title: gin+gorm crud 测试swagger
+  version: "1.0"
+paths:
+  /admin/createUser:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 'Create a user account: name, password, studentId and grade'
+      parameters:
+      - description: User's name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: User's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: User's ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      - description: User's grade
+        in: formData
+        name: grade
+        required: true
+        type: string
+      - description: Admin's current token
+        in: formData
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Create a user account
+      tags:
+      - Admins
+  /admin/deleteUser:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Delete a user account
+      parameters:
+      - description: User's ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      - description: Admin's current token
+        in: formData
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Delete a user account
+      tags:
+      - Admins
+  /admin/findUser:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Find a user account
+      parameters:
+      - description: User's ID
+        in: query
+        name: studentId
+        required: true
+        type: string
+      - description: Admin's current token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Find a user account
+      tags:
+      - Admins
+  /admin/findUserList:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Find all user account
+      parameters:
+      - description: Admin's current token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Find all user account
+      tags:
+      - Admins
+  /admin/update:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Update an admin's name and password
+      parameters:
+      - description: Admin's name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Admin's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: Admin's current token
+        in: formData
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Update an admin's info
+      tags:
+      - Admins
+  /admin/updateUser:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 'Update a user account: name, password, studentId and grade'
+      parameters:
+      - description: User's name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: User's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: User's ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      - description: User's grade
+        in: formData
+        name: grade
+        required: true
+        type: string
+      - description: Admin's current token
+        in: formData
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Update a user account
+      tags:
+      - Admins
+  /padmin/login:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Verify an admin account
+      parameters:
+      - description: Admin's name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Admin's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Admin Login
+      tags:
+      - Admins
+  /puser/login:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Verify a user account
+      parameters:
+      - description: User's ID
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: User's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Admin Login
+      tags:
+      - User
+  /user/create:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Create a user account
+      parameters:
+      - description: User's name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: User's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: User's student ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      - description: User's grade
+        in: formData
+        name: grade
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Create a user account
+      tags:
+      - User
+  /user/delete:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Delete a user account
+      parameters:
+      - description: User's student ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Delete a user account
+      tags:
+      - User
+  /user/find:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Delete a user account
+      parameters:
+      - description: User's student ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Delete a user account
+      tags:
+      - User
+  /user/update:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Update a user account
+      parameters:
+      - description: User's name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: User's password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: User's student ID
+        in: formData
+        name: studentId
+        required: true
+        type: string
+      - description: User's grade
+        in: formData
+        name: grade
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Error
+          schema:
+            $ref: '#/definitions/services.Response'
+      summary: Update a user account
+      tags:
+      - User
+swagger: "2.0"
