@@ -1,27 +1,46 @@
 import React, { useState } from 'react';
-import { Input, Button, Row, Col, Upload, message } from 'antd';
+import { Input, Button, Row, Col, Upload, message, Image } from 'antd';
 import axios from 'axios';
 import Papa from 'papaparse';
 
 function QueryStudent() {
   const [studentId, setStudentId] = useState('');
   const [queryResult, setQueryResult] = useState('');
+  const [categoryImages, setCategoryImages] = useState([]);
   const [fileData, setFileData] = useState(null);
 
+  // 处理输入框变化
   const handleInputChange = (e) => {
     setStudentId(e.target.value);
   };
 
+  // 查询学号
   const handleQuery = async () => {
     try {
       const response = await axios.get(`https://your-api.com/students/${studentId}`);
       setQueryResult(response.data);
+      // 假设类别是响应数据的一部分
+      const category = response.data.category;
+      fetchCategoryImages(category);
     } catch (error) {
       console.error('查询失败:', error);
       setQueryResult('查询失败，请重试');
     }
   };
 
+  // 获取类别图片
+  const fetchCategoryImages = async (category) => {
+    try {
+      const response = await axios.get(`https://your-api.com/category-images/${category}`);
+      // 假设响应包含一个base64图片数组
+      setCategoryImages(response.data.images);
+    } catch (error) {
+      console.error('图片获取失败:', error);
+      message.error('图片获取失败，请重试');
+    }
+  };
+
+  // 处理文件变化
   const handleFileChange = ({ file }) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -30,12 +49,13 @@ function QueryStudent() {
           setFileData(results.data);
           message.success('文件读取成功');
         },
-        header: true // 如果CSV文件包含标题行，请设置为true
+        header: true
       });
     };
     reader.readAsText(file);
   };
 
+  // 上传文件
   const handleFileUpload = async () => {
     try {
       const response = await axios.post('https://your-api.com/upload-csv', {
@@ -51,39 +71,38 @@ function QueryStudent() {
   return (
     <div style={{ padding: '20px' }}>
       <Row gutter={16}>
-        <Col>
+
+        {/* 学生信息查询部分 */}
+        <Col span={12}>
           <Input 
             placeholder="输入学号" 
             value={studentId} 
             onChange={handleInputChange} 
           />
-        </Col>
-        <Col>
           <Button type="primary" onClick={handleQuery}>查询</Button>
+          {queryResult && <div>查询结果: {JSON.stringify(queryResult)}</div>}
+          {/* 显示类别图片 */}
+          {categoryImages.map((img, index) => (
+            <Image key={index} src={`data:image/png;base64,${img}`} />
+          ))}
         </Col>
-      </Row>
-      <Row style={{ marginTop: '20px' }}>
-        <Col>
+
+        {/* CSV文件处理部分 */}
+        <Col span={12}>
           <Upload 
             beforeUpload={() => false} 
             onChange={handleFileChange}>
             <Button>选择CSV文件</Button>
           </Upload>
-        </Col>
-        <Col>
           <Button 
             type="primary" 
             onClick={handleFileUpload} 
             disabled={!fileData}
           >
-            上传CSV
+            上传文件
           </Button>
         </Col>
-      </Row>
-      <Row style={{ marginTop: '20px' }}>
-        <Col>
-          {queryResult && <div>查询结果: {JSON.stringify(queryResult)}</div>}
-        </Col>
+
       </Row>
     </div>
   );
