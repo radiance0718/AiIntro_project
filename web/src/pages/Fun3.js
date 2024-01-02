@@ -58,8 +58,13 @@ function QueryStudent() {
   // 上传文件
   const handleFileUpload = async () => {
     try {
-      const response = await axios.post('https://your-api.com/upload-csv', {
-        data: fileData
+      const formData = new FormData();
+      formData.append('file', fileData); 
+
+      const response = await axios.post('https://your-api.com/upload-csv', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+        },
       });
       message.success('文件上传成功');
     } catch (error) {
