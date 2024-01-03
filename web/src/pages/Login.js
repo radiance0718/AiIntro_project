@@ -8,7 +8,7 @@ function Login() {
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch('http://10.26.137.106:9090/admin/login', {
+      const response = await fetch('http://localhost:9090/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

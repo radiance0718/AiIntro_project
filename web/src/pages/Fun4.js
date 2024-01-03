@@ -34,7 +34,7 @@ const VisitStatistics = ({ startDate, endDate, queryButtonClicked, setQueryButto
             if (queryButtonClicked) {
                 try {
                     const response = await axios.post(
-                        'http://10.26.137.106:9090/admin/countDate',
+                        'http://10.16.13.71:9090/admin/countDate',
                         {
                             StartDate: formatDateToString(startDate),
                             EndDate: formatDateToString(endDate)
@@ -43,13 +43,10 @@ const VisitStatistics = ({ startDate, endDate, queryButtonClicked, setQueryButto
                     setVisitCount(response.data);
                 } catch (error) {
                     console.error('Error fetching visit count:', error);
-                    setVisitCount(114);
                 } finally {
                     // Reset queryButtonClicked to false after fetching data
                     setQueryButtonClicked(false);
                 }
-            } else{
-                setVisitCount(514);
             }
         };
 
@@ -69,6 +66,7 @@ function Fun4() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [queryButtonClicked, setQueryButtonClicked] = useState(false);
+    const [showResult, setShowResult] = useState(false);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -88,7 +86,6 @@ function Fun4() {
     };
 
 
-
     return (
         <div className="fun4-container">
             <h2>图书馆读者分类系统访问统计</h2>
@@ -99,13 +96,12 @@ function Fun4() {
                 handleEndDateChange={handleEndDateChange}
                 handleQuery={handleQuery}
             />
-            {queryButtonClicked && (
+            {(
                 <VisitStatistics startDate={startDate}
                                  endDate={endDate}
                                  queryButtonClicked={queryButtonClicked}
                                  setQueryButtonClicked={setQueryButtonClicked}
                 />
-
             )}
         </div>
     );

@@ -25,7 +25,7 @@ function Fun2() {
 
   const handleQuery = async () => {
     try {
-      const response = await axios.post('http://10.26.137.106:9090/admin/countGrade', {
+      const response = await axios.post('http://localhost:9090/admin/countGrade', {
         Type: selectedCategory
       });
       setQueryResult(response.data);
